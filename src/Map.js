@@ -14,11 +14,11 @@ const Map = () => {
 
     const renderMarker = (d) => {
         return <Marker position={d.loc} key={d.id}>
-        <Popup>
-            <b>{d.name}</b><br />
-            Tyyppi: {d.type}
-        </Popup>
-    </Marker>
+            <Popup>
+                <b>{d.name}</b><br />
+                Tyyppi: {d.type}
+            </Popup>
+        </Marker>
     }
 
     return (
@@ -26,13 +26,7 @@ const Map = () => {
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            {<Marker position={[lat, lon]}>
-                <Popup>
-                    Forusin toimisto
-                </Popup>
-            </Marker>}
-
-            <DraggableMarker />
+            <DraggableMarker/>
 
 
             <div>

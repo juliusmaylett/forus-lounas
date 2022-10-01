@@ -54,7 +54,7 @@ const DraggableMarker = () => {
                             <option value="Buffet">Buffet</option>
                             <option value="Annos">Annos</option>
                         </Form.Select>
-                        <br/>
+                        <br />
                         <Button size="sm" onClick={toggleDraggable}>Tallenna</Button>
                     </>
 
