@@ -2,9 +2,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs, doc, setDoc } from 'firebase/firestore/lite';
 import { v4 as uuidv4 } from 'uuid';
-import { doc, setDoc } from "firebase/firestore";
 
 const Raffle = () => {
 
@@ -19,32 +18,31 @@ const Raffle = () => {
         measurementId: "G-EYJLTQ6X7Z"
     };
 
-
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+    const restColl = collection(db, "restaurants");
 
-    // Get a list of cities from your database
     async function getRestaurants(db) {
-        const restColl = collection(db, 'restaurants');
         const citySnapshot = await getDocs(restColl);
         const restaurants = citySnapshot.docs.map(doc => doc.data());
         return restaurants;
     }
 
     async function addNewRestaurant(db) {
+        let nameref = document.getElementById("new-rest-name");
+        let typeref = document.getElementById("new-rest-type");
 
-        var newName = document.getElementById("new-rest-name").value; // Ei toimi vielä
-        var newType = document.getElementById("new-rest-type").value;
+        if (nameref.value == "" || typeref.value == "") {
+            return
+        }
 
-        console.log(newName + newType);
-        
-
-        await setDoc(doc(db, "restaurants", uuidv4()), {
+        await setDoc(doc(restColl), {
             id: uuidv4(),
-            name: "Testirafla",
-            type: "Buffet"
+            name: nameref.value,
+            type: typeref.value
         })
+        nameref.value = "";
+        typeref.value = "";
     }
 
 
@@ -60,9 +58,7 @@ const Raffle = () => {
     }
 
     function filterRestaurants(items, type) {
-
         if (type === "no") { return items; }
-
         if (type === "yes") {
             var buffetArray = items.filter(function (el) {
                 return el.type == "Buffet";
@@ -102,8 +98,9 @@ const Raffle = () => {
                 <br></br>
                 <h2>Lisää uusi ravintola</h2>
                 <InputGroup size="sm" className="mb-3">
-                    <InputGroup.Text id="new-rest-name">Nimi</InputGroup.Text>
+                    <InputGroup.Text >Nimi</InputGroup.Text>
                     <Form.Control
+                        id="new-rest-name"
                         aria-label="Small"
                         aria-describedby="inputGroup-sizing-sm"
                     />
