@@ -25,8 +25,10 @@ const DraggableMarker = () => {
         }),
         [],
     )
-    const toggleDraggable = useCallback(() => {
+    const toggleDraggable = useCallback((d) => {
+        console.log(d.target);
         setDraggable((d) => !d)
+
     }, [])
 
     return (
@@ -40,7 +42,7 @@ const DraggableMarker = () => {
                 {draggable
                     ? <>
                         <h4>Lisää ravintola</h4>
-                        <p>Raahaa merkki ravintolan kohdalle</p>
+                        <p>Raahaa merkki ravintolan kohdalle, täytä tiedot ja tallenna!</p>
                         <InputGroup size="sm" className="mb-3">
                             <InputGroup.Text id="inputGroup-sizing-sm">Nimi</InputGroup.Text>
                             <Form.Control
@@ -50,7 +52,6 @@ const DraggableMarker = () => {
                         </InputGroup>
 
                         <Form.Select size="sm" aria-label="Default select example">
-                            <option>Ravintolan tyyppi</option>
                             <option value="Buffet">Buffet</option>
                             <option value="Annos">Annos</option>
                         </Form.Select>
@@ -59,7 +60,7 @@ const DraggableMarker = () => {
                     </>
 
 
-                    : 'Tallenna sijainti'}
+                    : ''}
 
             </Popup>
         </Marker>
