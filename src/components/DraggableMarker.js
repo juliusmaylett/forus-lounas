@@ -3,10 +3,11 @@ import { Marker, Popup } from 'react-leaflet'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import { addNewRestaurant } from '../firestore/db-functions';
 
 const center = {
-    lat: 60.17,
-    lng: 24.9443,
+    lat: 60.164998, 
+    lng: 24.943342
 }
 
 const DraggableMarker = () => {
@@ -19,15 +20,19 @@ const DraggableMarker = () => {
             dragend() {
                 const marker = markerRef.current
                 if (marker != null) {
-                    setPosition(marker.getLatLng())
+
+                    const pos = marker.getLatLng()
+                    setPosition(pos)
+                    console.log("current location: " + pos)
                 }
             },
         }),
         [],
     )
     const toggleDraggable = useCallback((d) => {
-        console.log(d.target);
-        setDraggable((d) => !d)
+        d.preventDefault();
+        //setDraggable((d) => !d)
+        addNewRestaurant(d, position)
 
     }, [])
 
@@ -40,26 +45,26 @@ const DraggableMarker = () => {
             <Popup minWidth={90}>
 
                 {draggable
-                    ? <>
+                    ? 
+                    <Form onSubmit={toggleDraggable}>
                         <h4>Lisää ravintola</h4>
                         <p>Raahaa merkki ravintolan kohdalle, täytä tiedot ja tallenna!</p>
-                        <InputGroup size="sm" className="mb-3">
-                            <InputGroup.Text id="inputGroup-sizing-sm">Nimi</InputGroup.Text>
+                        <InputGroup  size="sm" className="mb-3">
+                            <InputGroup.Text name="name" >Nimi</InputGroup.Text>
                             <Form.Control
                                 aria-label="Small"
                                 aria-describedby="inputGroup-sizing-sm"
                             />
                         </InputGroup>
 
-                        <Form.Select size="sm" aria-label="Default select example">
+                        <Form.Select name="type" size="sm" aria-label="Default select example">
                             <option value="Buffet">Buffet</option>
                             <option value="Annos">Annos</option>
                         </Form.Select>
                         <br />
-                        <Button size="sm" onClick={toggleDraggable}>Tallenna</Button>
-                    </>
-
-
+                        <Button size="sm" type="submit" >Tallenna</Button>
+                    </Form>
+                    
                     : ''}
 
             </Popup>

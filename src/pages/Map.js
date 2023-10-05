@@ -1,42 +1,54 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import DraggableMarker from './DraggableMarker';
-import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+import L from 'leaflet';
+import DraggableMarker from '../components/DraggableMarker';
+import { useEffect, useState } from 'react';
+import { getRestaurants } from '../firestore/db-functions';
 
-const [lat, lon] = [60.1647, 24.9443]
+const [lat, lon] = [60.1648, 24.9442]
+
+const homeIcon = new L.Icon({
+    iconUrl: '/home.svg',
+    iconAnchor: [12, 12],
+    iconSize: [24, 24]
+}
+);
+
+const restaurantIcon = new L.Icon({
+    iconUrl: '/food.svg',
+    iconAnchor: [12, 12],
+    iconSize: [24, 24]
+}
+);
 
 const Map = () => {
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyBw4tPrWPZBYel62o1uJReAOc9vHogG6Lc",
-        authDomain: "forus-lounas.firebaseapp.com",
-        databaseURL: "https://forus-lounas-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "forus-lounas",
-        storageBucket: "forus-lounas.appspot.com",
-        messagingSenderId: "206996163008",
-        appId: "1:206996163008:web:634cc6038d96e611eee025",
-        measurementId: "G-EYJLTQ6X7Z"
-    };
+    const [restaurants, setRestaurants] = useState([]);
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    useEffect(() => {
+        getRestaurants().then(e => setRestaurants(e));
 
-    let getRestaurants = () => {
-        const restColl = collection(db, 'restaurants');
-        const restSnapshot = getDocs(restColl);
-        console.log(restSnapshot);
-        const restaurants = restSnapshot.docs.map(doc => doc.data());
-        return restaurants;
+    }, [])
+
+    const renderMarker = (d, markerIcon) => {
+
+        if (!d.location) return;
+
+        return (
+            <Marker
+                position={[d.location._lat, d.location._long]}
+                key={d.id}
+                icon={markerIcon}
+            >
+                <Popup>
+                    <b>{d.name}</b><br />
+                    {d.type ? <span>Tyyppi: {d.type}</span> : null}
+                    
+                </Popup>
+            </Marker>
+        )
     }
- 
-    const renderMarker = (d) => {
-        return <Marker position={[d.location._lat, d.location._long]} key={d.id}>
-            <Popup>
-                <b>{d.name}</b><br />
-                Tyyppi: {d.type}
-            </Popup>
-        </Marker>
-    }
+
+    console.log(restaurants)
 
     return (
         <div className="map-container">
@@ -46,12 +58,11 @@ const Map = () => {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 <DraggableMarker />
 
+                {renderMarker({ name: "Konttori", location: { _lat: lat, _long: lon } }, homeIcon)}
+                {restaurants ? restaurants.map(r => renderMarker(r, restaurantIcon)) : null}
 
-                <div>
-                    {}
-                
-                </div>
             </MapContainer>
+
         </div>);
 }
 

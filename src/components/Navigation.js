@@ -1,6 +1,9 @@
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from "react-router-dom"
+import { Image } from 'react-bootstrap';
+
+
 
 export default function Navigation() {
   return (
@@ -10,7 +13,13 @@ export default function Navigation() {
       <Container>
         <Navbar.Brand>
           <Link to="/" className="site-title">
-            Forus-lounas
+          <Image
+              src={'/forus_kytkinkaavio.svg'}
+              className='brand-logo'
+              alt='Forus'
+              height='35px'
+              width='35px'
+            />
           </Link>
         </Navbar.Brand>
         <Link className="nav-link" to="/">Arvonta</Link>
