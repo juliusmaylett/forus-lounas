@@ -93,7 +93,6 @@ export async function addNewRestaurant(e, position) {
     const name = e.target.elements[0].value;
     const type = e.target.elements[1].value;
 
-
     if (name === "" || type === "") return;
 
     const record = {
@@ -105,10 +104,7 @@ export async function addNewRestaurant(e, position) {
             lng: position.lng
         }
     }
-
-    //console.log(record)
     await setDoc(doc(restColl), record)
-
 }
     
 

@@ -47,8 +47,6 @@ const Map = () => {
         )
     }
 
-    console.log(restaurants)
-
     return (
         <div className="map-container">
             <MapContainer center={[lat, lng]} zoom={15} scrollWheelZoom={true}>

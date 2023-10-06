@@ -20,12 +20,8 @@ const DraggableMarker = () => {
             dragend() {
                 const marker = markerRef.current
                 if (marker != null) {
-
                     const pos = marker.getLatLng();
-                    console.log(pos);
-                    
                     setPosition(pos);
-                    console.log("Dragend location: ", position);
                 }
             },
         }),
