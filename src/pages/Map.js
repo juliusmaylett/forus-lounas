@@ -4,7 +4,7 @@ import DraggableMarker from '../components/DraggableMarker';
 import { useEffect, useState } from 'react';
 import { getRestaurants } from '../firestore/db-functions';
 
-const [lat, lon] = [60.1648, 24.9442]
+const [lat, lng] = [60.1648, 24.9442]
 
 const homeIcon = new L.Icon({
     iconUrl: '/home.svg',
@@ -26,7 +26,6 @@ const Map = () => {
 
     useEffect(() => {
         getRestaurants().then(e => setRestaurants(e));
-
     }, [])
 
     const renderMarker = (d, markerIcon) => {
@@ -35,7 +34,7 @@ const Map = () => {
 
         return (
             <Marker
-                position={[d.location._lat, d.location._long]}
+                position={[d.location.lat, d.location.lng]}
                 key={d.id}
                 icon={markerIcon}
             >
@@ -52,16 +51,21 @@ const Map = () => {
 
     return (
         <div className="map-container">
-            <MapContainer center={[lat, lon]} zoom={15} scrollWheelZoom={true}>
+            <MapContainer center={[lat, lng]} zoom={15} scrollWheelZoom={true}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 <DraggableMarker />
 
-                {renderMarker({ name: "Konttori", location: { _lat: lat, _long: lon } }, homeIcon)}
+                {renderMarker({ name: "Konttori", location: { lat: lat, lng: lng } }, homeIcon)}
                 {restaurants ? restaurants.map(r => renderMarker(r, restaurantIcon)) : null}
 
             </MapContainer>
+
+            <p>
+                Lisää puuttuvia ravintoloita kartalle raahaamalla sininen merkki sopivaan 
+                kohtaan ja täyttämällä tiedot. Tämän jälkeen voit lisätä uusia päivittämällä sivun.
+            </p>
 
         </div>);
 }

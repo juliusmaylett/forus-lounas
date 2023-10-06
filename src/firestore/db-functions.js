@@ -16,7 +16,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const restColl = collection(db, "restaurants");
-
+/*
 export async function getRestaurants () {
 
     return [
@@ -25,8 +25,8 @@ export async function getRestaurants () {
             id: "1",
             type: "Buffet",
             location:{
-                _lat: 60.16349827907478,
-                _long: 24.941475489639807
+                lat: 60.16349827907478,
+                lng: 24.941475489639807
             }
         },
 
@@ -35,8 +35,8 @@ export async function getRestaurants () {
             id: "2",
             type: "Buffet",
             location:{
-                _lat: 60.16985205409827, 
-                _long: 24.941553816768756
+                lat: 60.16985205409827, 
+                lng: 24.941553816768756
             }
         },
         {
@@ -44,8 +44,8 @@ export async function getRestaurants () {
             id: "3",
             type: "Annos",
             location:{
-                _lat: 60.16359446928196, 
-                _long: 24.94535262970761
+                lat: 60.16359446928196, 
+                lng: 24.94535262970761
             }
         },
         {
@@ -53,8 +53,8 @@ export async function getRestaurants () {
             id: "4",
             type: "Annos",
             location:{
-                _lat: 60.16288563718815, 
-                _long: 24.939247237883684
+                lat: 60.16288563718815, 
+                lng: 24.939247237883684
             }
         },
         {
@@ -62,8 +62,8 @@ export async function getRestaurants () {
             id: "5",
             type: "Annos",
             location:{
-                _lat: 60.16656355259918, 
-                _long: 24.947850317881127
+                lat: 60.16656355259918, 
+                lng: 24.947850317881127
             }
         },
         {
@@ -71,35 +71,28 @@ export async function getRestaurants () {
             id: "6",
             type: "Buffet",
             location:{
-                _lat: 60.164863558299714, 
-                _long: 24.932694566362958
+                lat: 60.164863558299714, 
+                lng: 24.932694566362958
             }
         }
 
 
     ]
-}
+}*/
 
 
-/*
-// For saving quota
+// Use dummy data function for testing and saving quota
 export async function getRestaurants() {
     const dBSnapshot = await getDocs(restColl);
     const restaurants = dBSnapshot.docs.map(doc => doc.data());
     return restaurants;
-}*/
+}
 
 export async function addNewRestaurant(e, position) {
     
     const name = e.target.elements[0].value;
     const type = e.target.elements[1].value;
-    const lat = position.lat;
-    const lon = position.lng;
 
-    console.log(name);
-    console.log(type);
-    console.log(lat);
-    console.log(lon);
 
     if (name === "" || type === "") return;
 
@@ -108,20 +101,15 @@ export async function addNewRestaurant(e, position) {
         name: name,
         type: type,
         location: {
-            _lat: lat,
-            _long: lon
+            lat: position.lat,
+            lng: position.lng
         }
     }
 
+    //console.log(record)
+    await setDoc(doc(restColl), record)
+
 }
     
-/*
-    await setDoc(doc(restColl), {
-        id: uuidv4(),
-        name: name,
-        type: type,
-        location: {
-            _lat: lat,
-            _long: lon
-        }
-    })*/
+
+    

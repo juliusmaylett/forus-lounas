@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo, useCallback } from 'react';
+import { useState, useRef, useMemo, useCallback, useEffect } from 'react';
 import { Marker, Popup } from 'react-leaflet'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -21,19 +21,21 @@ const DraggableMarker = () => {
                 const marker = markerRef.current
                 if (marker != null) {
 
-                    const pos = marker.getLatLng()
-                    setPosition(pos)
-                    console.log("current location: " + pos)
+                    const pos = marker.getLatLng();
+                    console.log(pos);
+                    
+                    setPosition(pos);
+                    console.log("Dragend location: ", position);
                 }
             },
         }),
-        [],
+        [position],
     )
+
     const toggleDraggable = useCallback((d) => {
         d.preventDefault();
-        //setDraggable((d) => !d)
-        addNewRestaurant(d, position)
-
+        setDraggable((d) => !d)
+        addNewRestaurant(d, markerRef.current.getLatLng())
     }, [])
 
     return (
