@@ -19,6 +19,7 @@ export const NewRestaurantForm = () => {
             <Form.Select id="new-rest-type" size="sm" className="mb-3" aria-label="Default select example">
                 <option value="Buffet">Buffet</option>
                 <option value="Annos">Annos</option>
+                <option value="Annos & salaattipöytä">Annos & salaattipöytä</option>
             </Form.Select>
             <Button as="a" variant="primary" className="btn-1" id="raffle-button" onClick={(e) => addNewRestaurant(e)}>Lisää tietokantaan</Button>
         </div>)

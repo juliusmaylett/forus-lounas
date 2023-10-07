@@ -37,10 +37,10 @@ export const RaffleForm = () => {
     function filterRestaurants(items, type) {
         if (type === "no") { return items; }
         if (type === "yes") {
-            var buffetArray = items.filter(function (el) {
-                return el.type === "Buffet";
+            var hungryArray = items.filter(function (el) {
+                return el.type === "Buffet" || el.type === "Annos & salaattipöytä";
             });
-            return buffetArray
+            return hungryArray
         };
     }
 

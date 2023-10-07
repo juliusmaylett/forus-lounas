@@ -59,6 +59,7 @@ const DraggableMarker = () => {
                         <Form.Select name="type" size="sm" aria-label="Default select example">
                             <option value="Buffet">Buffet</option>
                             <option value="Annos">Annos</option>
+                            <option value="Annos & salaattipöytä">Annos & salaattipöytä</option>
                         </Form.Select>
                         <br />
                         <Button size="sm" type="submit" >Tallenna</Button>
