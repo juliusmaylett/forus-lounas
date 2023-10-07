@@ -1,24 +1,11 @@
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
+import { MapContainer, TileLayer } from 'react-leaflet';
 import DraggableMarker from '../components/DraggableMarker';
 import { useEffect, useState } from 'react';
 import { getRestaurants } from '../firestore/db-functions';
+import { renderMarker } from '../components/Marker';
+import { officeLocation, homeIcon, restaurantIcon } from '../utils/markers';
+import { MinimapControl } from '../components/MinimapControl';
 
-const [lat, lng] = [60.1648, 24.9442]
-
-const homeIcon = new L.Icon({
-    iconUrl: '/home.svg',
-    iconAnchor: [12, 12],
-    iconSize: [24, 24]
-}
-);
-
-const restaurantIcon = new L.Icon({
-    iconUrl: '/food.svg',
-    iconAnchor: [12, 12],
-    iconSize: [24, 24]
-}
-);
 
 const Map = () => {
 
@@ -28,42 +15,21 @@ const Map = () => {
         getRestaurants().then(e => setRestaurants(e));
     }, [])
 
-    const renderMarker = (d, markerIcon) => {
-
-        if (!d.location) return;
-
-        return (
-            <Marker
-                position={[d.location.lat, d.location.lng]}
-                key={d.id}
-                icon={markerIcon}
-            >
-                <Popup>
-                    <b>{d.name}</b><br />
-                    {d.type ? <span>Tyyppi: {d.type}</span> : null}
-                    
-                </Popup>
-            </Marker>
-        )
-    }
-
     return (
         <div className="map-container">
-            <MapContainer center={[lat, lng]} zoom={15} scrollWheelZoom={true}>
+            <MapContainer style={{width: '100%', height: '90vh'}} center={[officeLocation.lat, officeLocation.lng]} zoom={15} scrollWheelZoom={true}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 <DraggableMarker />
 
-                {renderMarker({ name: "Konttori", location: { lat: lat, lng: lng } }, homeIcon)}
+                {renderMarker({ name: "Konttori", location: { lat: officeLocation.lat, lng: officeLocation.lng } }, homeIcon)}
                 {restaurants ? restaurants.map(r => renderMarker(r, restaurantIcon)) : null}
+                
+
+                <MinimapControl position="topright" />
 
             </MapContainer>
-
-            <p>
-                Lisää puuttuvia ravintoloita kartalle raahaamalla sininen merkki sopivaan 
-                kohtaan ja täyttämällä tiedot. Tämän jälkeen voit lisätä uusia päivittämällä sivun.
-            </p>
 
         </div>);
 }

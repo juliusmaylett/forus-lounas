@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo, useCallback, useEffect } from 'react';
+import { useState, useRef, useMemo, useCallback } from 'react';
 import { Marker, Popup } from 'react-leaflet'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -28,10 +28,12 @@ const DraggableMarker = () => {
         [position],
     )
 
-    const toggleDraggable = useCallback((d) => {
+    const saveToDB = useCallback((d) => {
         d.preventDefault();
-        setDraggable((d) => !d)
+        //setDraggable((d) => !d)
+
         addNewRestaurant(d, markerRef.current.getLatLng())
+        
     }, [])
 
     return (
@@ -44,9 +46,9 @@ const DraggableMarker = () => {
 
                 {draggable
                     ? 
-                    <Form onSubmit={toggleDraggable}>
+                    <Form onSubmit={saveToDB}>
                         <h4>Lisää ravintola</h4>
-                        <p>Raahaa merkki ravintolan kohdalle, täytä tiedot ja tallenna!</p>
+                        <p>Raahaa merkki ravintolan kohdalle, täytä tiedot ja tallenna. Ravintola on jatkossa mukana arvonnassa!</p>
                         <InputGroup  size="sm" className="mb-3">
                             <InputGroup.Text name="name" >Nimi</InputGroup.Text>
                             <Form.Control

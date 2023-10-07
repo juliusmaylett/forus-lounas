@@ -3,11 +3,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Link } from "react-router-dom"
 import { Image } from 'react-bootstrap';
 
-
-
 export default function Navigation() {
   return (
-
 
     <Navbar className="nav">
       <Container>
