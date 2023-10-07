@@ -19,9 +19,8 @@ export default function Navigation() {
             />
           </Link>
         </Navbar.Brand>
-        <Link className="nav-link" to="/">Arvonta</Link>
+        <Link className="nav-link" to="/raffle">Arvonta</Link>
         <Link className="nav-link" to="/map">Selaa kartalla</Link>
-        <Link className="nav-link" to="/about">Info</Link>
       </Container>
     </Navbar>
   )

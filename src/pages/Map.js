@@ -11,17 +11,20 @@ const Map = () => {
 
     const [restaurants, setRestaurants] = useState([]);
 
+
     useEffect(() => {
         getRestaurants().then(e => setRestaurants(e));
     }, [])
 
     return (
         <div className="map-container">
-            <MapContainer style={{width: '100%', height: '90vh'}} center={[officeLocation.lat, officeLocation.lng]} zoom={15} scrollWheelZoom={true}>
+            <MapContainer center={[officeLocation.lat, officeLocation.lng]} zoom={15} scrollWheelZoom={true}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                <DraggableMarker />
+                
+                <DraggableMarker/>
+                
 
                 {renderMarker({ name: "Konttori", location: { lat: officeLocation.lat, lng: officeLocation.lng } }, homeIcon)}
                 {restaurants ? restaurants.map(r => renderMarker(r, restaurantIcon)) : null}

@@ -49,14 +49,17 @@ export const RaffleForm = () => {
     return (
         <div className='page-form-container'>
 
-            <h2>Tärkeimmät ensin...</h2>
-            <p>Onko väliä, jos jää nälkä?</p>
+            
+            <h1 className="display-5 fw-bold">Tärkeimmät ensin...</h1>
+            <p className="col-lg-6 mx-auto">Onko väliä, jos jää nälkä?</p>
+
             <Form.Select id="rest-type-selector" size="sm" className="mb-3" aria-label="Default select example">
                 <option value="yes">Vähän kyllä harmittaisi...</option>
                 <option value="no">Kaikki käy - olen pieniruokainen!</option>
             </Form.Select>
 
-            <Button as="a" variant="primary" className="btn-1" id="raffle-button" size="lg" onClick={(e) => newRaffle(e)}>Arvo lounaspaikka</Button>
+            <Button as="a" variant="primary" className="btn-1" id="raffle-button" size="lg"  onClick={(e) => newRaffle(e)}>Arvo lounaspaikka</Button>
+            
             <div id="result-restaurant"></div>
 
             {resultUrl ?

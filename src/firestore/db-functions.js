@@ -104,7 +104,8 @@ export async function addNewRestaurant(e, position) {
             lng: position.lng
         }
     }
-    await setDoc(doc(restColl), record)
+    
+    await setDoc(doc(restColl), record);
 }
     
 

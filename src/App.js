@@ -1,11 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Navigation from "./components/Navigation"
-import About from "./pages/About"
 import Map from './pages/Map';
 import { Route, Routes } from "react-router-dom";
 import Navbar from 'react-bootstrap/Navbar';
 import Raffle from './pages/Raffle';
+import About from './pages/About';
 
 function App() {
   return (
@@ -14,9 +14,10 @@ function App() {
         <Navigation />
       </Navbar>
       <Routes>
-        <Route path="/" element={<Raffle />} />
+        <Route path="/" element={<About />} />
+        <Route path="/raffle" element={<Raffle />} />
         <Route path="/map" element={<Map />} />
-        <Route path="/about" element={<About />} />
+        
       </Routes>
     </>
   );

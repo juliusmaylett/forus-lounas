@@ -30,7 +30,6 @@ export function MinimapControl({ zoom }) {
                 <span class="font-weight-bold">
                     Lisää puuttuva ravintola kartalle raahaamalla
                     sinistä merkkiä ja painamalla sitä.
-                    Lisäyksen jälkeen päivitä sivu.
                 </span>
 
             </MapContainer>

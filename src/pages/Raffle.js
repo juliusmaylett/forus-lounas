@@ -1,12 +1,10 @@
-
-//import { NewRestaurantForm } from '../components/NewRestaurantForm';
 import { RaffleForm } from '../components/RaffleForm';
 
 const Raffle = () => {
 
     return (
         <div className="page-container home-page">
-            <RaffleForm/>
+            <RaffleForm />
         </div >
     );
 }
